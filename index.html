@@ -55,6 +55,8 @@
                 <div class="card glass"> <br>
                     <div class="container">
                         <h3 class="text-center">SimpleCode</h3>
+                        <div id="uiInfo" class="mt-2 mb-2">
+                        </div>
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
@@ -321,6 +323,22 @@
 
         function selectUI(id) {
             selectedUI = id;
+            var ele = $(".ui").get(id);
+            tagName = ele.tagName;
+            var name = tagName
+            for (var i = 0; i < UILib.length; i++) {
+                var item = UILib[i];
+                if (item.tag == tagName) {
+                    name = item.name;
+                    break;
+                }
+            }
+
+            var infoHtml = `
+                已选择：${name}
+            `;
+            $("#uiInfo").html(infoHtml);
+
         }
 
         function showPreview() {
@@ -331,13 +349,9 @@
             $("#preview").html(html);
             $(".ui").each(function (index, element) {
                 ele = $(element);
-                ele.mouseenter(function () {
-                    $(".ui").removeClass("ui-hover");
-                    $(this).addClass("ui-hover");
-                })
-                ele.mouseleave(function () {
-                    $(this).removeClass("ui-hover");
-                })
+                ele.click(function () {
+                    selectUI(index);
+                });
             });
 
         }
