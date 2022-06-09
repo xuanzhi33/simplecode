@@ -13,6 +13,21 @@
     <link href="https://unpkg.zhimg.com/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="style.css">
+    <style>
+        .ui {
+            border: 2px dashed #ccc;
+        }
+
+        .ui-hover {
+            border: 2px solid #296324;
+        }
+
+        #tipText {
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
     <script>
         var _hmt = _hmt || [];
         (function () {
@@ -31,9 +46,7 @@
         <div class="row">
             <div class="col-md-8 mb-3">
                 <div class="card glass"> <br>
-                    <div class="container">
-                        <h1 class="text-center">标题</h1>
-                        <p class="text-center">内容</p>
+                    <div class="container" id="preview">
                     </div> <br>
                 </div>
             </div>
@@ -58,7 +71,7 @@
                             </div>
                         </div>
 
-                        
+
                     </div> <br>
                 </div>
             </div>
@@ -67,6 +80,9 @@
     </div>
 
     <br>
+    <div id="tipText">
+
+    </div>
     <script src="https://unpkg.zhimg.com/jquery@3/dist/jquery.min.js"></script>
     <script>
         UILib = [
@@ -237,7 +253,7 @@
             }
         ]
 
-        function showUILib(){
+        function showUILib() {
             var html = "";
             for (var i = 0; i < UILib.length; i++) {
                 var item = UILib[i];
@@ -252,41 +268,81 @@
         }
 
         var myCode = `
-        <div class="card glass"> <br>
+        <div> <br>
                     <div class="container">
-                        <h1 class="text-center">标题</h1>
-                        <p class="text-center">内容</p>
+                        <h1 class="text-center">标题<span>1</span></h1>
+                        <br>
+                        <div>
+                            div2
+                        </div>
                     </div> <br>
                 </div>
         `;
 
-        function showUIinPreview(object){
+        var tagsWithoutClose = [
+            "IMG",
+            "INPUT",
+            "BR",
+            "HR"
+        ];
+        function showUIinPreview(object) {
             var tagname = object.get(0).tagName;
-            var toolsHtml = `
-                <div class="tools">
-                    <button class="btn btn-light selBtn">
-                        选择
-                    </button>
-                    <button class="btn btn-light" removeBtn>
-                        删除
-                    </button>
 
-                </div>
+            object.addClass("ui");
+
+            var children = object.children();
+            var childrenHTML = "";
+            for (var i = 0; i < children.length; i++) {
+                var child = children.eq(i);
+                childrenHTML += showUIinPreview(child);
+            }
+
+            var closeTagStr = `</${tagname}>`;
+            if (children.length == 0) {
+                childrenHTML = object.html();
+                if (tagsWithoutClose.indexOf(tagname) != -1) {
+                    closeTagStr = "";
+                }
+            }
+
+
+            var tagRegExp = /<[^>]+>/g;
+            var OpenTagStr = object.prop("outerHTML").match(tagRegExp)[0];
+
+            return `
+                ${OpenTagStr}
+                ${childrenHTML}
+                ${closeTagStr}
             `;
-            var attrsHtml = "";
-            var attrs = object.attr();
-            
-            
+
         }
 
-        function showPreview(){
+        var selectedUI = null;
+
+        function selectUI(id) {
+            selectedUI = id;
+        }
+
+        function showPreview() {
             var html = "";
             //解析myCode
-            var dom = $(myCode);
-            var children = dom.children();
+            var object = $(myCode);
+            html = showUIinPreview(object);
+            $("#preview").html(html);
+            $(".ui").each(function (index, element) {
+                ele = $(element);
+                ele.mouseenter(function () {
+                    $(".ui").removeClass("ui-hover");
+                    $(this).addClass("ui-hover");
+                })
+                ele.mouseleave(function () {
+                    $(this).removeClass("ui-hover");
+                })
+            });
 
         }
 
+        showPreview();
         $("#select").change(function () {
             var select = $("#select").val();
             if (select == 1) {
