@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<!--Made with ❤ by XUANZHI-->
+<!--该页面已接入百度统计-->
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="theme-color" content="#e9f1e9">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>SimpleCode</title>
+    <!-- Bootstrap -->
+    <link href="https://unpkg.zhimg.com/bootstrap@4.4.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script>
+        var _hmt = _hmt || [];
+        (function () {
+            var hm = document.createElement("script");
+            hm.src = "https://hm.baidu.com/hm.js?76d748872de14bad7ef88266420d87e4";
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(hm, s);
+        })();
+    </script>
+</head>
+
+<body>
+    <br>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-8 mb-3">
+                <div class="card glass"> <br>
+                    <div class="container">
+                        <h1 class="text-center">标题</h1>
+                        <p class="text-center">内容</p>
+                    </div> <br>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card glass"> <br>
+                    <div class="container">
+                        <h3 class="text-center">SimpleCode</h3>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-code" aria-hidden="true"></i>
+                                </span>
+                            </div>
+                            <select class="form-control" id="select">
+                                <option value="1">元件库</option>
+                                <option value="2">逻辑库</option>
+                                <option value="3">源代码</option>
+                            </select>
+                            <div id="lib">
+
+                            </div>
+                        </div>
+
+                        
+                    </div> <br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <br>
+    <script src="https://unpkg.zhimg.com/jquery@3/dist/jquery.min.js"></script>
+    <script>
+        UILib = [
+            {
+                "tag": "button",
+                "name": "按钮",
+                "class": {
+                    "主要按钮": "btn btn-primary",
+                    "次要按钮": "btn btn-secondary",
+                    "成功按钮": "btn btn-success",
+                    "警告按钮": "btn btn-warning",
+                    "危险按钮": "btn btn-danger",
+                    "提示按钮": "btn btn-info",
+                    "禁用按钮": "btn btn-disabled"
+                },
+                "attrs": [
+                    {
+                        "name": "点击事件",
+                        "attr": "onclick",
+                        "type": "attr"
+                    },
+                    {
+                        "name": "按钮文本",
+                        "attr": "text",
+                        "type": "html"
+                    },
+                ]
+            },
+            {
+                "tag": "p",
+                "name": "文本段落",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "文本",
+                        "attr": "text",
+                        "type": "html"
+                    }
+                ]
+            },
+            {
+                "tag": "h1",
+                "name": "标题1",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "文本",
+                        "attr": "text",
+                        "type": "html"
+                    }
+                ]
+            },
+            {
+                "tag": "h2",
+                "name": "标题2",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "文本",
+                        "attr": "text",
+                        "type": "html"
+                    }
+                ]
+            },
+            {
+                "tag": "h3",
+                "name": "标题3",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "文本",
+                        "attr": "text",
+                        "type": "html"
+                    }
+                ]
+            },
+            {
+                "tag": "h4",
+                "name": "标题4",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "文本",
+                        "attr": "text",
+                        "type": "html"
+                    }
+                ]
+            },
+            {
+                "tag": "h5",
+                "name": "标题5",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "文本",
+                        "attr": "text",
+                        "type": "html"
+                    }
+                ]
+            },
+            {
+                "tag": "h6",
+                "name": "标题6",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "文本",
+                        "attr": "text",
+                        "type": "html"
+                    }
+                ]
+            },
+            {
+                "tag": "img",
+                "name": "图片",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "图片地址",
+                        "attr": "src",
+                        "type": "attr"
+                    },
+                    {
+                        "name": "图片宽度",
+                        "attr": "width",
+                        "type": "attr"
+                    },
+                    {
+                        "name": "图片高度",
+                        "attr": "height",
+                        "type": "attr"
+                    },
+                    {
+                        "name": "图片点击事件",
+                        "attr": "onclick",
+                        "type": "attr"
+                    }
+                ]
+            },
+            {
+                "tag": "a",
+                "name": "链接",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "链接地址",
+                        "attr": "href",
+                        "type": "attr"
+                    },
+                    {
+                        "name": "链接文本",
+                        "attr": "text",
+                        "type": "attr"
+                    }
+                ]
+            },
+            {
+                "tag": "input",
+                "name": "输入框",
+                "class": {},
+                "attrs": [
+                    {
+                        "name": "输入框类型",
+                        "attr": "type",
+                        "type": "attr"
+                    }
+                ]
+            }
+        ]
+
+        function showUILib(){
+            var html = "";
+            for (var i = 0; i < UILib.length; i++) {
+                var item = UILib[i];
+                html += `
+                    <button class="btn btn-light mt-2" onclick="addUI(${i})">
+                        ${item.name}
+                    </button>
+                `;
+            }
+            $("#lib").html(html);
+
+        }
+
+        var myCode = `
+        <div class="card glass"> <br>
+                    <div class="container">
+                        <h1 class="text-center">标题</h1>
+                        <p class="text-center">内容</p>
+                    </div> <br>
+                </div>
+        `;
+
+        function showUIinPreview(object){
+            var tagname = object.get(0).tagName;
+            var toolsHtml = `
+                <div class="tools">
+                    <button class="btn btn-light selBtn">
+                        选择
+                    </button>
+                    <button class="btn btn-light" removeBtn>
+                        删除
+                    </button>
+
+                </div>
+            `;
+            var attrsHtml = "";
+            var attrs = object.attr();
+            
+            
+        }
+
+        function showPreview(){
+            var html = "";
+            //解析myCode
+            var dom = $(myCode);
+            var children = dom.children();
+
+        }
+
+        $("#select").change(function () {
+            var select = $("#select").val();
+            if (select == 1) {
+                showUILib();
+            }
+        });
+
+        showUILib();
+    </script>
+</body>
+
+</html>
